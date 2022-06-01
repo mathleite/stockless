@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   api:
@@ -6,7 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: api
-    volumes:
-      - ./:/var/www/api
     working_dir: /var/www/api
-    tty: false
+    command: flask run --host=0.0.0.0 --eager-loading
+    environment:
+      FLASK_ENV: "development"
+    volumes:
+      - type: bind
+        source: "./app"
+        target: "/var/www/api"
+    ports:
+      - "5001:5000"
