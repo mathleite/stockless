@@ -9,4 +9,4 @@ services:
     volumes:
       - ./:/var/www/api
     working_dir: /var/www/api
-    tty: true
+    tty: false
