@@ -16,3 +16,21 @@ services:
         target: "/var/www/api"
     ports:
       - "5001:5000"
+    networks:
+      - backend
+
+  postgresql:
+    image: postgres:14.3
+    environment:
+      POSTGRES_PASSWORD: stockless
+      POSTGRES_USER: stockless
+      POSTGRES_DB: stockless
+    networks:
+      - backend
+    container_name: database
+    ports:
+      - "5432:5432"
+
+networks:
+  backend:
+    driver: bridge
