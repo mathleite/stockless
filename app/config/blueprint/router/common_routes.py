@@ -6,7 +6,7 @@ common_routes = Blueprint('common_routes', __name__)
 
 @common_routes.route('/')
 def hello_world():
-    return "<p>Hello, Matheus!</p>"
+    return "<p>Hello, World!</p>"
 
 
 @common_routes.route('/health-check')

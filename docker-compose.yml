@@ -8,8 +8,7 @@ services:
     container_name: api
     working_dir: /var/www/api
     command: flask run --host=0.0.0.0 --eager-loading
-    environment:
-      FLASK_ENV: "development"
+    restart: on-failure
     volumes:
       - type: bind
         source: "./app"
@@ -18,18 +17,36 @@ services:
       - "5001:5000"
     networks:
       - backend
+    env_file:
+      - .env
+    depends_on:
+      - database
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  postgresql:
+  database:
     image: postgres:14.3
-    environment:
-      POSTGRES_PASSWORD: stockless
-      POSTGRES_USER: stockless
-      POSTGRES_DB: stockless
     networks:
       - backend
     container_name: database
+    volumes:
+      - type: bind
+        source: "./database/data"
+        target: "/var/lib/postgresql/data/"
+    env_file:
+      - .env
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 networks:
   backend:

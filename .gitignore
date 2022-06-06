@@ -1,3 +1,7 @@
+# FILES
+.env
+
+# FOLDERS
 .idea
 venv
 /**/__pycache__
