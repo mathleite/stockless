@@ -1,19 +1,19 @@
 version: '3.9'
 
 services:
-  app:
+  api:
     build:
       context: .
       target: dev
     volumes:
-      - .:/app
+      - ./api/:/api
     container_name: backend
-    command: sh -c 'tail -f /dev/null'
+    command: sh -c 'npm run start:docker'
     ports:
       - "3000:3000"
     networks:
       - server
-    working_dir: /app
+    working_dir: /api
     env_file: .env
     depends_on:
       - database
